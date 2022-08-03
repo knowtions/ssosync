@@ -377,7 +377,7 @@ func (s *syncGSuite) SyncGroupsUsers(query string) error {
 		log := log.WithFields(log.Fields{"group": awsGroup.DisplayName})
 
 		log.Info("creating group")
-		_, err := s.aws.CreateGroup(awsGroup)
+		newAWSGroup, err := s.aws.CreateGroup(awsGroup)
 		if err != nil {
 			log.Error("creating group")
 			return err
@@ -394,7 +394,7 @@ func (s *syncGSuite) SyncGroupsUsers(query string) error {
 			}
 
 			log.WithField("user", awsUserFull.Username).Info("adding user to group")
-			err = s.aws.AddUserToGroup(awsUserFull, awsGroup)
+			err = s.aws.AddUserToGroup(awsUserFull, newAWSGroupg)
 			if err != nil {
 				return err
 			}
@@ -501,12 +501,22 @@ func (s *syncGSuite) getGoogleGroupsAndUsers(googleGroups []*admin.Group) ([]*ad
 				continue
 			}
 
+                        if m.Type == "GROUP" {
+                                log.WithField("id", m.Email).Debug("ignoring group address")
+                                continue
+                        }
+
 			log.WithField("id", m.Email).Debug("get user")
 			q := fmt.Sprintf("email:%s", m.Email)
 			u, err := s.google.GetUsers(q) // TODO: implement GetUser(m.Email)
 			if err != nil {
 				return nil, nil, err
 			}
+
+                        if len(u) == 0 {
+                                log.WithField("email", m.Email).Debug("Ignoring Unknown User")
+                                continue
+                        }
 
 			membersUsers = append(membersUsers, u[0])
 

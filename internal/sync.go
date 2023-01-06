@@ -394,7 +394,7 @@ func (s *syncGSuite) SyncGroupsUsers(query string) error {
 			}
 
 			log.WithField("user", awsUserFull.Username).Info("adding user to group")
-			err = s.aws.AddUserToGroup(awsUserFull, newAWSGroupg)
+			err = s.aws.AddUserToGroup(awsUserFull, newAWSGroup)
 			if err != nil {
 				return err
 			}

@@ -20,6 +20,8 @@ Execute `make package` in the console. Which will package and upload the functio
 
 ### Example
 
+Here using go1.19 to build this application, can try with newer version if go have new version.
+
 Build
 
 ```bash
@@ -31,7 +33,7 @@ sam build && make go-build
 Deploy
 
 ```bash
-cp ./ssysonc .aws-sam/build/SSOSyncFunction/dist/ssosync_linux_amd64_v1/ssosync
+cp ./ssosync .aws-sam/build/SSOSyncFunction/dist/ssosync_linux_amd64_v1/ssosync
 sam deploy --guided
 ```
 

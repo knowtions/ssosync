@@ -1,0 +1,12 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "ssosync-knowtions"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-knk5iolybkvx"
+s3_prefix = "ssosync-knowtions"
+region = "us-east-2"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+parameter_overrides = "ScheduleExpression=\"cron(15 17 * * ? *)\" LogLevel=\"warn\" LogFormat=\"json\" GoogleUserMatch=\"\" GoogleGroupMatch=\"\" IgnoreGroups=\"\" IgnoreUsers=\"\" IncludeGroups=\"\" SyncMethod=\"groups\""
+image_repositories = []
